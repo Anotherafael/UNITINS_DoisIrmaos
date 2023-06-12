@@ -46,7 +46,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryFeatures", x => new { x.CategoryID, x.FeatureID });
+                    table.PrimaryKey("PK_CategoryFeatures", x => new { x.FeatureID, x.CategoryID });
                     table.ForeignKey(
                         name: "FK_CategoryFeatures_Categories_CategoryID",
                         column: x => x.CategoryID,
@@ -62,9 +62,9 @@ namespace UNITINS_DoisIrmaos.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryFeatures_FeatureID",
+                name: "IX_CategoryFeatures_CategoryID",
                 table: "CategoryFeatures",
-                column: "FeatureID");
+                column: "CategoryID");
         }
 
         /// <inheritdoc />

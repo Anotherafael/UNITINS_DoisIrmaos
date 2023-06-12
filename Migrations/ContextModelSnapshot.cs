@@ -42,15 +42,15 @@ namespace UNITINS_DoisIrmaos.Migrations
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.CategoryFeature", b =>
                 {
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
                     b.Property<int>("FeatureID")
                         .HasColumnType("int");
 
-                    b.HasKey("CategoryID", "FeatureID");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("FeatureID");
+                    b.HasKey("FeatureID", "CategoryID");
+
+                    b.HasIndex("CategoryID");
 
                     b.ToTable("CategoryFeatures");
                 });
@@ -73,7 +73,7 @@ namespace UNITINS_DoisIrmaos.Migrations
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.CategoryFeature", b =>
                 {
-                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Cateogory")
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
                         .WithMany("Features")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -85,7 +85,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cateogory");
+                    b.Navigation("Category");
 
                     b.Navigation("Feature");
                 });
