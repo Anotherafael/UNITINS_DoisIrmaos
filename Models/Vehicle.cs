@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public bool Available { get; set; }
         public bool Active { get; set; }
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
     }
 }

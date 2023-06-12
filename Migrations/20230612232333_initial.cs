@@ -38,6 +38,28 @@ namespace UNITINS_DoisIrmaos.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vehicle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicle_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryFeatures",
                 columns: table => new
                 {
@@ -65,6 +87,11 @@ namespace UNITINS_DoisIrmaos.Migrations
                 name: "IX_CategoryFeatures_CategoryID",
                 table: "CategoryFeatures",
                 column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicle_CategoryID",
+                table: "Vehicle",
+                column: "CategoryID");
         }
 
         /// <inheritdoc />
@@ -74,10 +101,13 @@ namespace UNITINS_DoisIrmaos.Migrations
                 name: "CategoryFeatures");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Vehicle");
 
             migrationBuilder.DropTable(
                 name: "Features");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

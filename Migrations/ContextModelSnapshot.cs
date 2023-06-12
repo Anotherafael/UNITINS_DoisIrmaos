@@ -71,6 +71,33 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.ToTable("Features");
                 });
 
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("Vehicle");
+                });
+
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.CategoryFeature", b =>
                 {
                     b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
@@ -88,6 +115,17 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Feature");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Vehicle", b =>
+                {
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Category", b =>
