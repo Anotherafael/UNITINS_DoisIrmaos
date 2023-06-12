@@ -14,6 +14,9 @@ namespace UNITINS_DoisIrmaos.DAL
         public DbSet<Feature> Features { get; set; }
         public DbSet<CategoryFeature> CategoryFeatures { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Protection> Protections { get; set; }
+        public DbSet<Acessory> Acessories { get; set; }
+        public DbSet<Tax> Taxes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
