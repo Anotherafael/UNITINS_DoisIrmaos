@@ -54,6 +54,23 @@ namespace UNITINS_DoisIrmaos.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Personnel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Personnel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Protections",
                 columns: table => new
                 {
@@ -147,6 +164,9 @@ namespace UNITINS_DoisIrmaos.Migrations
 
             migrationBuilder.DropTable(
                 name: "CategoryFeatures");
+
+            migrationBuilder.DropTable(
+                name: "Personnel");
 
             migrationBuilder.DropTable(
                 name: "Protections");

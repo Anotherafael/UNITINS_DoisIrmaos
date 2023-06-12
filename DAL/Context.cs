@@ -17,6 +17,7 @@ namespace UNITINS_DoisIrmaos.DAL
         public DbSet<Protection> Protections { get; set; }
         public DbSet<Acessory> Acessories { get; set; }
         public DbSet<Tax> Taxes { get; set; }
+        public DbSet<Employee> Personnel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -11,7 +11,7 @@ using UNITINS_DoisIrmaos.DAL;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230612232927_initial")]
+    [Migration("20230612233521_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -81,6 +81,34 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("CategoryFeatures");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cpf")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Personnel");
                 });
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Feature", b =>
