@@ -22,19 +22,19 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var context = _context.Vehicle.Include(v => v.Category);
+            var context = _context.Vehicles.Include(v => v.Category);
             return View(await context.ToListAsync());
         }
 
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null || _context.Vehicles == null)
             {
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle
+            var vehicle = await _context.Vehicles
                 .Include(v => v.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null)
@@ -48,7 +48,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id");
             return View();
         }
 
@@ -65,24 +65,24 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
             return View(vehicle);
         }
 
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null || _context.Vehicles == null)
             {
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle.FindAsync(id);
+            var vehicle = await _context.Vehicles.FindAsync(id);
             if (vehicle == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
             return View(vehicle);
         }
 
@@ -118,19 +118,19 @@ namespace UNITINS_DoisIrmaos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
             return View(vehicle);
         }
 
         // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Vehicle == null)
+            if (id == null || _context.Vehicles == null)
             {
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle
+            var vehicle = await _context.Vehicles
                 .Include(v => v.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null)
@@ -146,14 +146,14 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Vehicle == null)
+            if (_context.Vehicles == null)
             {
-                return Problem("Entity set 'Context.Vehicle'  is null.");
+                return Problem("Entity set 'Context.Vehicles'  is null.");
             }
-            var vehicle = await _context.Vehicle.FindAsync(id);
+            var vehicle = await _context.Vehicles.FindAsync(id);
             if (vehicle != null)
             {
-                _context.Vehicle.Remove(vehicle);
+                _context.Vehicles.Remove(vehicle);
             }
             
             await _context.SaveChangesAsync();
@@ -162,7 +162,7 @@ namespace UNITINS_DoisIrmaos.Controllers
 
         private bool VehicleExists(int id)
         {
-          return _context.Vehicle.Any(e => e.Id == id);
+          return _context.Vehicles.Any(e => e.Id == id);
         }
     }
 }

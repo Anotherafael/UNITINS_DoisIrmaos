@@ -21,15 +21,12 @@ namespace UNITINS_DoisIrmaos.DAL
         public DbSet<Client> Clients { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public DbSet<RentAcessory> RentAcessories { get; set; }
-        public DbSet<RentProtection> RentProtections { get; set; }
         public DbSet<RentTax> RentTaxes { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CategoryFeature>().HasKey(sc => new { sc.FeatureID, sc.CategoryID });
             modelBuilder.Entity<RentAcessory>().HasKey(sc => new { sc.RentID, sc.AcessoryID });
-            modelBuilder.Entity<RentProtection>().HasKey(sc => new { sc.RentID, sc.ProtectionID });
             modelBuilder.Entity<RentTax>().HasKey(sc => new { sc.RentID, sc.TaxID });
 
             modelBuilder.Entity<Client>().Property(c => c.Password).IsRequired(false);
@@ -38,6 +35,5 @@ namespace UNITINS_DoisIrmaos.DAL
 
         }
 
-        public DbSet<UNITINS_DoisIrmaos.Models.Vehicle> Vehicle { get; set; }
     }
 }

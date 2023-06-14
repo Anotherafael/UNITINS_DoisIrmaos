@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -122,7 +122,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicle",
+                name: "Vehicles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -134,9 +134,9 @@ namespace UNITINS_DoisIrmaos.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicle", x => x.Id);
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicle_Categories_CategoryID",
+                        name: "FK_Vehicles_Categories_CategoryID",
                         column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -180,9 +180,10 @@ namespace UNITINS_DoisIrmaos.Migrations
                     ReturnedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
                     VehicleID = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
+                    BuyerID = table.Column<int>(type: "int", nullable: false),
                     DriverID = table.Column<int>(type: "int", nullable: true),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                    EmployeeID = table.Column<int>(type: "int", nullable: false),
+                    ProtectionID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,8 +195,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rents_Clients_ClientID",
-                        column: x => x.ClientID,
+                        name: "FK_Rents_Clients_BuyerID",
+                        column: x => x.BuyerID,
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -213,9 +214,15 @@ namespace UNITINS_DoisIrmaos.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rents_Vehicle_VehicleID",
+                        name: "FK_Rents_Protections_ProtectionID",
+                        column: x => x.ProtectionID,
+                        principalTable: "Protections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rents_Vehicles_VehicleID",
                         column: x => x.VehicleID,
-                        principalTable: "Vehicle",
+                        principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction,
                         onUpdate: ReferentialAction.NoAction);
@@ -239,30 +246,6 @@ namespace UNITINS_DoisIrmaos.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RentAcessories_Rents_RentID",
-                        column: x => x.RentID,
-                        principalTable: "Rents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RentProtections",
-                columns: table => new
-                {
-                    RentID = table.Column<int>(type: "int", nullable: false),
-                    ProtectionID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RentProtections", x => new { x.RentID, x.ProtectionID });
-                    table.ForeignKey(
-                        name: "FK_RentProtections_Protections_ProtectionID",
-                        column: x => x.ProtectionID,
-                        principalTable: "Protections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RentProtections_Rents_RentID",
                         column: x => x.RentID,
                         principalTable: "Rents",
                         principalColumn: "Id",
@@ -304,19 +287,14 @@ namespace UNITINS_DoisIrmaos.Migrations
                 column: "AcessoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RentProtections_ProtectionID",
-                table: "RentProtections",
-                column: "ProtectionID");
+                name: "IX_Rents_BuyerID",
+                table: "Rents",
+                column: "BuyerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rents_CategoryID",
                 table: "Rents",
                 column: "CategoryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rents_ClientID",
-                table: "Rents",
-                column: "ClientID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rents_DriverID",
@@ -329,6 +307,11 @@ namespace UNITINS_DoisIrmaos.Migrations
                 column: "EmployeeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rents_ProtectionID",
+                table: "Rents",
+                column: "ProtectionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rents_VehicleID",
                 table: "Rents",
                 column: "VehicleID");
@@ -339,8 +322,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                 column: "TaxID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicle_CategoryID",
-                table: "Vehicle",
+                name: "IX_Vehicles_CategoryID",
+                table: "Vehicles",
                 column: "CategoryID");
         }
 
@@ -354,9 +337,6 @@ namespace UNITINS_DoisIrmaos.Migrations
                 name: "RentAcessories");
 
             migrationBuilder.DropTable(
-                name: "RentProtections");
-
-            migrationBuilder.DropTable(
                 name: "RentTaxes");
 
             migrationBuilder.DropTable(
@@ -364,9 +344,6 @@ namespace UNITINS_DoisIrmaos.Migrations
 
             migrationBuilder.DropTable(
                 name: "Acessories");
-
-            migrationBuilder.DropTable(
-                name: "Protections");
 
             migrationBuilder.DropTable(
                 name: "Rents");
@@ -381,7 +358,10 @@ namespace UNITINS_DoisIrmaos.Migrations
                 name: "Personnel");
 
             migrationBuilder.DropTable(
-                name: "Vehicle");
+                name: "Protections");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "Categories");

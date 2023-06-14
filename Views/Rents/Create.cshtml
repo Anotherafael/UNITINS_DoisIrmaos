@@ -1,0 +1,77 @@
+﻿@model UNITINS_DoisIrmaos.Models.Rent
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Rent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartAt" class="control-label"></label>
+                <input asp-for="StartAt" class="form-control" />
+                <span asp-validation-for="StartAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndAt" class="control-label"></label>
+                <input asp-for="EndAt" class="form-control" />
+                <span asp-validation-for="EndAt" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="TakenAt" class="control-label"></label>
+                <input asp-for="TakenAt" class="form-control" />
+                <span asp-validation-for="TakenAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReturnedAt" class="control-label"></label>
+                <input asp-for="ReturnedAt" class="form-control" />
+                <span asp-validation-for="ReturnedAt" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="CategoryID" class="control-label"></label>
+                <select asp-for="CategoryID" class ="form-control" asp-items="ViewBag.CategoryID"></select>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="VehicleID" class="control-label"></label>
+                <select asp-for="VehicleID" class ="form-control" asp-items="ViewBag.VehicleID"></select>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="BuyerID" class="control-label"></label>
+                <select asp-for="BuyerID" class ="form-control" asp-items="ViewBag.BuyerID"></select>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="DriverID" class="control-label"></label>
+                <select asp-for="DriverID" class ="form-control" asp-items="ViewBag.DriverID"></select>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="EmployeeID" class="control-label"></label>
+                <select asp-for="EmployeeID" class ="form-control" asp-items="ViewBag.EmployeeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtectionID" class="control-label"></label>
+                <select asp-for="ProtectionID" class ="form-control" asp-items="ViewBag.ProtectionID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

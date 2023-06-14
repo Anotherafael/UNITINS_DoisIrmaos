@@ -7,9 +7,5 @@
         public string Description { get; set; }
         public float PricePerDay { get; set; }
 
-        public ICollection<RentProtection> Rents { get; set; }
-        public Protection() {
-        Rents = new List<RentProtection>();
-        }
     }
 }

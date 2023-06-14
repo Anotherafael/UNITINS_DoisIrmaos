@@ -12,8 +12,8 @@ using UNITINS_DoisIrmaos.DAL;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230614050440_initial")]
-    partial class initial
+    [Migration("20230614154533_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,10 +198,10 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryID")
+                    b.Property<int>("BuyerID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientID")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
                     b.Property<int>("DriverID")
@@ -215,6 +215,9 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<int>("ProtectionID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ReturnedAt")
                         .HasColumnType("datetime2");
@@ -230,13 +233,15 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryID");
+                    b.HasIndex("BuyerID");
 
-                    b.HasIndex("ClientID");
+                    b.HasIndex("CategoryID");
 
                     b.HasIndex("DriverID");
 
                     b.HasIndex("EmployeeID");
+
+                    b.HasIndex("ProtectionID");
 
                     b.HasIndex("VehicleID");
 
@@ -256,21 +261,6 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.HasIndex("AcessoryID");
 
                     b.ToTable("RentAcessories");
-                });
-
-            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentProtection", b =>
-                {
-                    b.Property<int>("RentID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProtectionID")
-                        .HasColumnType("int");
-
-                    b.HasKey("RentID", "ProtectionID");
-
-                    b.HasIndex("ProtectionID");
-
-                    b.ToTable("RentProtections");
                 });
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentTax", b =>
@@ -331,7 +321,7 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.CategoryFeature", b =>
@@ -355,15 +345,15 @@ namespace UNITINS_DoisIrmaos.Migrations
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
                 {
-                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Buyer")
                         .WithMany()
-                        .HasForeignKey("CategoryID")
+                        .HasForeignKey("BuyerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Buyer")
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("ClientID")
+                        .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -376,6 +366,12 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.HasOne("UNITINS_DoisIrmaos.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Protection", "Protection")
+                        .WithMany()
+                        .HasForeignKey("ProtectionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -392,6 +388,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Navigation("Driver");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Protection");
 
                     b.Navigation("Vehicle");
                 });
@@ -411,25 +409,6 @@ namespace UNITINS_DoisIrmaos.Migrations
                         .IsRequired();
 
                     b.Navigation("Acessory");
-
-                    b.Navigation("Rent");
-                });
-
-            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentProtection", b =>
-                {
-                    b.HasOne("UNITINS_DoisIrmaos.Models.Protection", "Protection")
-                        .WithMany("Rents")
-                        .HasForeignKey("ProtectionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UNITINS_DoisIrmaos.Models.Rent", "Rent")
-                        .WithMany("Protections")
-                        .HasForeignKey("RentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Protection");
 
                     b.Navigation("Rent");
                 });
@@ -479,16 +458,9 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Protection", b =>
-                {
-                    b.Navigation("Rents");
-                });
-
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
                 {
                     b.Navigation("Acessories");
-
-                    b.Navigation("Protections");
 
                     b.Navigation("Taxes");
                 });

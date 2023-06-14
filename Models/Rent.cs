@@ -12,21 +12,21 @@
         public Category Category { get; set; }
         public int VehicleID { get; set; }
         public Vehicle Vehicle { get; set; }
-        public int ClientID { get; set; }
+        public int BuyerID { get; set; }
         public Client Buyer { get; set; }
         public int DriverID { get; set; }
         public Client Driver { get; set; }
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
+        public int ProtectionID { get; set; }
+        public Protection Protection { get; set; }
 
         public ICollection<RentAcessory> Acessories { get; set; }
-        public ICollection<RentProtection> Protections { get; set; }
         public ICollection<RentTax> Taxes { get; set; }
 
         public Rent()
         {
             Acessories = new List<RentAcessory>();
-            Protections = new List<RentProtection>();
             Taxes = new List<RentTax>();
         }
 
