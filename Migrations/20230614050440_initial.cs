@@ -167,10 +167,176 @@ namespace UNITINS_DoisIrmaos.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Rents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    StartAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TakenAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReturnedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    VehicleID = table.Column<int>(type: "int", nullable: false),
+                    ClientID = table.Column<int>(type: "int", nullable: false),
+                    DriverID = table.Column<int>(type: "int", nullable: true),
+                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rents_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rents_Clients_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rents_Clients_DriverID",
+                        column: x => x.DriverID,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction,
+                        onUpdate: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Rents_Personnel_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalTable: "Personnel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rents_Vehicle_VehicleID",
+                        column: x => x.VehicleID,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction,
+                        onUpdate: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentAcessories",
+                columns: table => new
+                {
+                    RentID = table.Column<int>(type: "int", nullable: false),
+                    AcessoryID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentAcessories", x => new { x.RentID, x.AcessoryID });
+                    table.ForeignKey(
+                        name: "FK_RentAcessories_Acessories_AcessoryID",
+                        column: x => x.AcessoryID,
+                        principalTable: "Acessories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RentAcessories_Rents_RentID",
+                        column: x => x.RentID,
+                        principalTable: "Rents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentProtections",
+                columns: table => new
+                {
+                    RentID = table.Column<int>(type: "int", nullable: false),
+                    ProtectionID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentProtections", x => new { x.RentID, x.ProtectionID });
+                    table.ForeignKey(
+                        name: "FK_RentProtections_Protections_ProtectionID",
+                        column: x => x.ProtectionID,
+                        principalTable: "Protections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RentProtections_Rents_RentID",
+                        column: x => x.RentID,
+                        principalTable: "Rents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentTaxes",
+                columns: table => new
+                {
+                    RentID = table.Column<int>(type: "int", nullable: false),
+                    TaxID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentTaxes", x => new { x.RentID, x.TaxID });
+                    table.ForeignKey(
+                        name: "FK_RentTaxes_Rents_RentID",
+                        column: x => x.RentID,
+                        principalTable: "Rents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RentTaxes_Taxes_TaxID",
+                        column: x => x.TaxID,
+                        principalTable: "Taxes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryFeatures_CategoryID",
                 table: "CategoryFeatures",
                 column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentAcessories_AcessoryID",
+                table: "RentAcessories",
+                column: "AcessoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentProtections_ProtectionID",
+                table: "RentProtections",
+                column: "ProtectionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_CategoryID",
+                table: "Rents",
+                column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_ClientID",
+                table: "Rents",
+                column: "ClientID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_DriverID",
+                table: "Rents",
+                column: "DriverID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_EmployeeID",
+                table: "Rents",
+                column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_VehicleID",
+                table: "Rents",
+                column: "VehicleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentTaxes_TaxID",
+                table: "RentTaxes",
+                column: "TaxID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_CategoryID",
@@ -182,10 +348,31 @@ namespace UNITINS_DoisIrmaos.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CategoryFeatures");
+
+            migrationBuilder.DropTable(
+                name: "RentAcessories");
+
+            migrationBuilder.DropTable(
+                name: "RentProtections");
+
+            migrationBuilder.DropTable(
+                name: "RentTaxes");
+
+            migrationBuilder.DropTable(
+                name: "Features");
+
+            migrationBuilder.DropTable(
                 name: "Acessories");
 
             migrationBuilder.DropTable(
-                name: "CategoryFeatures");
+                name: "Protections");
+
+            migrationBuilder.DropTable(
+                name: "Rents");
+
+            migrationBuilder.DropTable(
+                name: "Taxes");
 
             migrationBuilder.DropTable(
                 name: "Clients");
@@ -194,16 +381,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 name: "Personnel");
 
             migrationBuilder.DropTable(
-                name: "Protections");
-
-            migrationBuilder.DropTable(
-                name: "Taxes");
-
-            migrationBuilder.DropTable(
                 name: "Vehicle");
-
-            migrationBuilder.DropTable(
-                name: "Features");
 
             migrationBuilder.DropTable(
                 name: "Categories");

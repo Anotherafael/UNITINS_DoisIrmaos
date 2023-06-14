@@ -187,6 +187,104 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.ToTable("Protections");
                 });
 
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DriverID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("ReturnedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TakenAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ClientID");
+
+                    b.HasIndex("DriverID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("VehicleID");
+
+                    b.ToTable("Rents");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentAcessory", b =>
+                {
+                    b.Property<int>("RentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AcessoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("RentID", "AcessoryID");
+
+                    b.HasIndex("AcessoryID");
+
+                    b.ToTable("RentAcessories");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentProtection", b =>
+                {
+                    b.Property<int>("RentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProtectionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("RentID", "ProtectionID");
+
+                    b.HasIndex("ProtectionID");
+
+                    b.ToTable("RentProtections");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentTax", b =>
+                {
+                    b.Property<int>("RentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TaxID")
+                        .HasColumnType("int");
+
+                    b.HasKey("RentID", "TaxID");
+
+                    b.HasIndex("TaxID");
+
+                    b.ToTable("RentTaxes");
+                });
+
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Tax", b =>
                 {
                     b.Property<int>("Id")
@@ -252,6 +350,106 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Navigation("Feature");
                 });
 
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
+                {
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentAcessory", b =>
+                {
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Acessory", "Acessory")
+                        .WithMany("Rents")
+                        .HasForeignKey("AcessoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Rent", "Rent")
+                        .WithMany("Acessories")
+                        .HasForeignKey("RentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Acessory");
+
+                    b.Navigation("Rent");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentProtection", b =>
+                {
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Protection", "Protection")
+                        .WithMany("Rents")
+                        .HasForeignKey("ProtectionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Rent", "Rent")
+                        .WithMany("Protections")
+                        .HasForeignKey("RentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Protection");
+
+                    b.Navigation("Rent");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.RentTax", b =>
+                {
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Rent", "Rent")
+                        .WithMany("Taxes")
+                        .HasForeignKey("RentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UNITINS_DoisIrmaos.Models.Tax", "Tax")
+                        .WithMany("Rents")
+                        .HasForeignKey("TaxID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rent");
+
+                    b.Navigation("Tax");
+                });
+
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Vehicle", b =>
                 {
                     b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
@@ -263,6 +461,11 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Acessory", b =>
+                {
+                    b.Navigation("Rents");
+                });
+
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Category", b =>
                 {
                     b.Navigation("Features");
@@ -271,6 +474,25 @@ namespace UNITINS_DoisIrmaos.Migrations
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Feature", b =>
                 {
                     b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Protection", b =>
+                {
+                    b.Navigation("Rents");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
+                {
+                    b.Navigation("Acessories");
+
+                    b.Navigation("Protections");
+
+                    b.Navigation("Taxes");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Tax", b =>
+                {
+                    b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618
         }

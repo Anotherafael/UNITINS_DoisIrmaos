@@ -6,6 +6,10 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public float PricePerDay { get; set; }
-        public Protection() { }
+
+        public ICollection<RentProtection> Rents { get; set; }
+        public Protection() {
+        Rents = new List<RentProtection>();
+        }
     }
 }
