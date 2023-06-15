@@ -77,7 +77,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category, List<int> Features)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price")] Category category, List<int> Features)
         {
             if (ModelState.IsValid)
             {
@@ -119,6 +119,7 @@ namespace UNITINS_DoisIrmaos.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Features = new MultiSelectList(_context.Features, "Id", "Name");
             return View(category);
         }
 
@@ -127,7 +128,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price")] Category category, List<int> Features)
         {
             if (id != category.Id)
             {
@@ -138,6 +139,21 @@ namespace UNITINS_DoisIrmaos.Controllers
             {
                 try
                 {
+                    var feats = _context.CategoryFeatures.Where(f => f.CategoryID == category.Id).ToList();
+
+                    foreach (var featInt in Features)
+                    {
+                        foreach (var feat in feats)
+                        {
+                            if (feat.FeatureID != featInt)
+                            {
+                                var catfeat = new CategoryFeature(category.Id, featInt);
+                                _context.CategoryFeatures.Add(catfeat);
+                                await _context.SaveChangesAsync();
+                            }
+                        }
+                    }
+                    
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
@@ -154,6 +170,7 @@ namespace UNITINS_DoisIrmaos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Features = new MultiSelectList(_context.Features, "Id", "Name");
             return View(category);
         }
 

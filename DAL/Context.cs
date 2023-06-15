@@ -30,7 +30,6 @@ namespace UNITINS_DoisIrmaos.DAL
             modelBuilder.Entity<RentTax>().HasKey(sc => new { sc.RentID, sc.TaxID });
 
             modelBuilder.Entity<Client>().Property(c => c.Password).IsRequired(false);
-            modelBuilder.Entity<Client>().Property(c => c.ConfirmPassword).IsRequired(false);
             modelBuilder.Entity<Client>().Property(c => c.Address).IsRequired(false);
 
         }

@@ -16,6 +16,10 @@ namespace UNITINS_DoisIrmaos.Models
         [StringLength(280)]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Por favor, insira um preço")]
+        [Display(Name = "Preço por dia")]
+        public float Price { get; set; }
+
         [Display(Name = "Características")]
         public ICollection<CategoryFeature> Features { get; set;}
 

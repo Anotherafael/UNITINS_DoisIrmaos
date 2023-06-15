@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class ini : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(280)", maxLength: 280, nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -33,8 +33,9 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(280)", maxLength: 280, nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,13 +48,12 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConfirmPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -68,7 +68,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,11 +81,11 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,8 +98,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(280)", maxLength: 280, nullable: false),
                     PricePerDay = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -113,7 +113,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PricePerDay = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -127,7 +127,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Available = table.Column<bool>(type: "bit", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CategoryID = table.Column<int>(type: "int", nullable: false)
@@ -179,7 +179,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     TakenAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ReturnedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
-                    VehicleID = table.Column<int>(type: "int", nullable: false),
+                    VehicleID = table.Column<int>(type: "int", nullable: true),
                     BuyerID = table.Column<int>(type: "int", nullable: false),
                     DriverID = table.Column<int>(type: "int", nullable: true),
                     EmployeeID = table.Column<int>(type: "int", nullable: false),

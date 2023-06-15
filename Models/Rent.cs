@@ -11,22 +11,22 @@ namespace UNITINS_DoisIrmaos.Models
         public float Price { get; set; }
 
         [Required(ErrorMessage = "Por favor, insira a data de retida prevista")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data de Retirada Prevista")]
         public DateTime StartAt { get; set; }
 
         [Required(ErrorMessage = "Por favor, insira a data de devolução prevista")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data de Devolução Prevista")]
         public DateTime EndAt { get; set; }
 
         [Required(ErrorMessage = "Por favor, insira a data dA retida")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data de Retirada Efetiva")]
         public DateTime TakenAt { get; set; }
 
         [Required(ErrorMessage = "Por favor, insira a data da devolução")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data de Devolução Efetiva")]
         public DateTime ReturnedAt { get; set; }
         public int CategoryID { get; set; }

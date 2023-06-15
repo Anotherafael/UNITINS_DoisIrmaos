@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UNITINS_DoisIrmaos.DAL;
@@ -56,6 +57,30 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,PhoneNumber,Cnh,BirthDate")] Client client)
         {
+            if (ModelState.IsValid)
+            {
+                client.Active = true;
+                _context.Add(client);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(client);
+        }
+
+        public IActionResult CreateFull()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFull([Bind("Id,Name,Email,PhoneNumber,Cnh,BirthDate,Password,Address")] Client client, string ConfirmPassword)
+        {
+            if (!client.Password.Equals(ConfirmPassword))
+            {
+                ModelState.AddModelError("", "A confirmação de senha está incorreta.");
+                return View(client);
+            }
             if (ModelState.IsValid)
             {
                 client.Active = true;

@@ -14,5 +14,15 @@ namespace UNITINS_DoisIrmaos.Models
 
         [Display(Name = "Característica")]
         public Feature Feature { get; set; }
+        public CategoryFeature()
+        {
+
+        }
+        public CategoryFeature(int categoryID, int featureID)
+        {
+            this.CategoryID = categoryID;
+            this.FeatureID = featureID;
+        }
+
     }
 }

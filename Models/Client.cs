@@ -36,10 +36,6 @@ namespace UNITINS_DoisIrmaos.Models
         [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Mínimo de 8 caracteres")]
-        [Display(Name = "Confirmar Senha")]
-        public string ConfirmPassword { get; set; }
-
         [Display(Name = "Ativo")]
         public bool Active { get; set; }
 
