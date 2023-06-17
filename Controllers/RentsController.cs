@@ -69,6 +69,25 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID")] Rent rent)
         {
+
+            if (rent.EndAt <= rent.StartAt)
+            {
+                ModelState.AddModelError("", "Ending date can't be sooner than the start date.");
+                return View(rent);
+            }
+
+            if (rent.ReturnedAt <= rent.TakenAt)
+            {
+                ModelState.AddModelError("", "Return date can't be sooner than the date of taking.");
+                return View(rent);
+            }
+
+            if (rent.Price < 0)
+            {
+                ModelState.AddModelError("", "Price can't be lower than 0.");
+                return View(rent);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(rent);

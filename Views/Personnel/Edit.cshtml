@@ -38,6 +38,7 @@
                 <input asp-for="Password" class="form-control" type="password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -46,9 +47,24 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a style="border: 16px; background-color: #24292E; color: white; font-weight: 500; margin-right: 8px" type="submit" class="btn btn-default" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Cpf').mask('999.999.999-99');
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#PhoneNumber').mask('(99) 99999-9999');
+        });
+    </script>
 }

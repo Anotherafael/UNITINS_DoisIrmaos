@@ -6,59 +6,71 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira o preço do aluguel")]
-        [Display(Name = "Preço")]
+        [Required(ErrorMessage = "Please, insert a price value")]
+        [Display(Name = "Price")]
         public float Price { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira a data de retida prevista")]
+        [Required(ErrorMessage = "Please, insert a start date")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Data de Retirada Prevista")]
+        [Display(Name = "Start Date")]
         public DateTime StartAt { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira a data de devolução prevista")]
+        [Required(ErrorMessage = "Please, insert an ending date")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Data de Devolução Prevista")]
+        [Display(Name = "Ending Date")]
         public DateTime EndAt { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira a data dA retida")]
+        [Required(ErrorMessage = "Please, insert a pick-up date")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Data de Retirada Efetiva")]
+        [Display(Name = "Pick-up Date")]
         public DateTime TakenAt { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira a data da devolução")]
+        [Required(ErrorMessage = "Please, insert a drop-off date")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Data de Devolução Efetiva")]
+        [Display(Name = "Drop-off Date")]
         public DateTime ReturnedAt { get; set; }
+
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
 
-        [Display(Name = "Categoria")]
+        [Display(Name = "Category")]
         public Category Category { get; set; }
+
+        [Display(Name = "Vehicle")]
         public int VehicleID { get; set; }
 
-        [Display(Name = "Veículo")]
+        [Display(Name = "Vehicle")]
         public Vehicle Vehicle { get; set; }
+
+        [Display(Name = "Buyer")]
         public int BuyerID { get; set; }
 
-        [Display(Name = "Comprador")]
+        [Display(Name = "Buyer")]
         public Client Buyer { get; set; }
+
+        [Display(Name = "Driver")]
         public int DriverID { get; set; }
 
-        [Display(Name = "Motorista")]
+        [Display(Name = "Driver")]
         public Client Driver { get; set; }
+
+        [Display(Name = "Employee")]
         public int EmployeeID { get; set; }
 
-        [Display(Name = "Funcionário")]
+        [Display(Name = "Employee")]
         public Employee Employee { get; set; }
+
+        [Display(Name = "Protection")]
         public int ProtectionID { get; set; }
 
-        [Display(Name = "Proteção")]
+        [Display(Name = "Protection")]
         public Protection Protection { get; set; }
 
 
-        [Display(Name = "Acessórios")]
+        [Display(Name = "Acessories")]
         public ICollection<RentAcessory> Acessories { get; set; }
 
-        [Display(Name = "Taxas")]
+        [Display(Name = "Taxes")]
         public ICollection<RentTax> Taxes { get; set; }
 
         public Rent()

@@ -57,6 +57,12 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,PhoneNumber,Cnh,BirthDate")] Client client)
         {
+            if (client.BirthDate > DateTime.Now.AddYears(-18))
+            {
+                ModelState.AddModelError("", "Invalid Birth Day.");
+                return View(client);
+            }
+
             if (ModelState.IsValid)
             {
                 client.Active = true;
@@ -76,9 +82,15 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFull([Bind("Id,Name,Email,PhoneNumber,Cnh,BirthDate,Password,Address")] Client client, string ConfirmPassword)
         {
+
+            if (client.BirthDate > DateTime.Now.AddYears(-18))
+            {
+                ModelState.AddModelError("", "Invalid Birth Day.");
+                return View(client);
+            }
             if (!client.Password.Equals(ConfirmPassword))
             {
-                ModelState.AddModelError("", "A confirmação de senha está incorreta.");
+                ModelState.AddModelError("", "Passwords don't match.");
                 return View(client);
             }
             if (ModelState.IsValid)

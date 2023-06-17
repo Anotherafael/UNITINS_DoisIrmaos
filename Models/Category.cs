@@ -6,21 +6,21 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um nome")]
-        [Display(Name = "Nome")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Mínimo de 2 caracteres")]
+        [Required(ErrorMessage = "Please, insert a name")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Minimum of 2 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira uma descrição")]
-        [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "Please, insert a description")]
+        [Display(Name = "Description")]
         [StringLength(280)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um preço")]
-        [Display(Name = "Preço por dia")]
+        [Required(ErrorMessage = "Please, insert a price value")]
+        [Display(Name = "Price")]
         public float Price { get; set; }
 
-        [Display(Name = "Características")]
+        [Display(Name = "Features")]
         public ICollection<CategoryFeature> Features { get; set;}
 
         public Category() { 

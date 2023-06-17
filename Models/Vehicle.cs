@@ -6,20 +6,21 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um nome")]
-        [Display(Name = "Nome")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Mínimo de 2 caracteres")]
+        [Required(ErrorMessage = "Please, insert a name")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Minimum of 2 characters")]
         public string Name { get; set; }
 
-        [Display(Name = "Disponível")]
+        [Display(Name = "Available")]
         public bool Available { get; set; }
 
-        [Display(Name = "Ativo")]
+        [Display(Name = "Active")]
         public bool Active { get; set; }
 
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
 
-        [Display(Name = "Categoria")]
+        [Display(Name = "Category")]
         public Category Category { get; set; }
     }
 }

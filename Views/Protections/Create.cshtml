@@ -27,6 +27,7 @@
                 <input asp-for="PricePerDay" class="form-control" />
                 <span asp-validation-for="PricePerDay" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -35,7 +36,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a style="border: 16px; background-color: #24292E; color: white; font-weight: 500; margin-right: 8px" type="submit" class="btn btn-default" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
