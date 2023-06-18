@@ -129,20 +129,6 @@ namespace UNITINS_DoisIrmaos.Controllers
                 _context.Add(rent);
                 await _context.SaveChangesAsync();
 
-                //CategoryFeature catfeat = new CategoryFeature();
-
-                //var cat = _context.Categories.Where(x => x.Name == category.Name).FirstOrDefault();
-                //category = await _context.Categories.FindAsync(cat.Id);
-                //catfeat.CategoryID = category.Id;
-
-                //for (int i = 0; i < Features.Count; i++)
-                //{
-                //    var feat = await _context.Features.FindAsync(Features[i]);
-                //    catfeat.FeatureID = feat.Id;
-                //    _context.Add(catfeat);
-                //    await _context.SaveChangesAsync();
-                //}
-
                 RentAcessory rentAcessory = new RentAcessory();
                 rent = await _context.Rents.Where(x => (x.CategoryID == rent.CategoryID && x.BuyerID == rent.BuyerID && x.StartAt == rent.StartAt)).FirstOrDefaultAsync();
                 rentAcessory.RentID = rent.Id;

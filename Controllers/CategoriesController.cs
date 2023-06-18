@@ -141,17 +141,18 @@ namespace UNITINS_DoisIrmaos.Controllers
                 {
                     var feats = _context.CategoryFeatures.Where(f => f.CategoryID == category.Id).ToList();
 
-                    foreach (var featInt in Features)
+                    foreach (var feat in feats)
                     {
-                        foreach (var feat in feats)
-                        {
-                            if (feat.FeatureID != featInt)
-                            {
-                                var catfeat = new CategoryFeature(category.Id, featInt);
-                                _context.CategoryFeatures.Add(catfeat);
-                                await _context.SaveChangesAsync();
-                            }
-                        }
+                        _context.Remove(feat);
+                    }
+
+                    var catfeat = new CategoryFeature();
+                    catfeat.CategoryID = category.Id;
+                    foreach (var featID in Features)
+                    {
+                        catfeat.FeatureID = featID;
+                        _context.Add(catfeat);
+                        await _context.SaveChangesAsync();
                     }
                     
                     _context.Update(category);
