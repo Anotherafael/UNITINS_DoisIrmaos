@@ -77,6 +77,7 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name");
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name");
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name");
+            ViewBag.Price = 0.0;
         }
 
         // POST: Rents/Create
@@ -84,7 +85,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID,Acessories,Taxes")] Rent rent)
+        public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID")] Rent rent, List<int> Acessories, List<int> Taxes)
         {
 
             if (rent.EndAt <= rent.StartAt)
@@ -104,17 +105,72 @@ namespace UNITINS_DoisIrmaos.Controllers
             //    }
             //}
 
-            if (rent.Price < 0)
-            {
-                ModelState.AddModelError("", "Price can't be lower than 0.");
-                loadData(rent);
-                return View(rent);
-            }
+            //if (rent.Price < 0)
+            //{
+            //    ModelState.AddModelError("", "Price can't be lower than 0.");
+            //    loadData(rent);
+            //    return View(rent);
+            //}
 
             if (ModelState.IsValid)
             {
+
+                var totalPrice = 0F;
+                var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == rent.CategoryID);
+                totalPrice += category.Price;
+                if (rent.ProtectionID != null)
+                {
+                    var protection = await _context.Protections.FirstOrDefaultAsync(x => x.Id == rent.ProtectionID);
+                    totalPrice += protection.PricePerDay;
+                }
+
+                rent.Price = totalPrice;
+
                 _context.Add(rent);
                 await _context.SaveChangesAsync();
+
+                //CategoryFeature catfeat = new CategoryFeature();
+
+                //var cat = _context.Categories.Where(x => x.Name == category.Name).FirstOrDefault();
+                //category = await _context.Categories.FindAsync(cat.Id);
+                //catfeat.CategoryID = category.Id;
+
+                //for (int i = 0; i < Features.Count; i++)
+                //{
+                //    var feat = await _context.Features.FindAsync(Features[i]);
+                //    catfeat.FeatureID = feat.Id;
+                //    _context.Add(catfeat);
+                //    await _context.SaveChangesAsync();
+                //}
+
+                RentAcessory rentAcessory = new RentAcessory();
+                rent = await _context.Rents.Where(x => (x.CategoryID == rent.CategoryID && x.BuyerID == rent.BuyerID && x.StartAt == rent.StartAt)).FirstOrDefaultAsync();
+                rentAcessory.RentID = rent.Id;
+
+                for (int i = 0; i < Acessories.Count; i++)
+                {
+                    var item = await _context.Acessories.FindAsync(Acessories[i]);
+                    rent.Price += item.Price;
+                    rentAcessory.AcessoryID = item.Id;
+                    _context.Add(rentAcessory);
+                    await _context.SaveChangesAsync();
+                }
+
+                _context.Update(rent);
+
+                RentTax rentTax = new RentTax();
+                rent = await _context.Rents.Where(x => (x.CategoryID == rent.CategoryID && x.BuyerID == rent.BuyerID && x.StartAt == rent.StartAt)).FirstOrDefaultAsync();
+                rentTax.RentID = rent.Id;
+
+                for (int i = 0; i < Taxes.Count; i++)
+                {
+                    var item = await _context.Taxes.FindAsync(Taxes[i]);
+                    rent.Price += ((float)item.PricePerDay);
+                    rentTax.TaxID = item.Id;
+                    _context.Add(rentTax);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             loadData(rent);

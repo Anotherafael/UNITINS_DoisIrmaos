@@ -50,9 +50,12 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
+            <tr>
+                <td>
+                    @{
+                        var formattedPrice = item.Price.ToString("0.00");
+                    }
+                @Html.DisplayFor(model => formattedPrice)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartAt)
@@ -67,22 +70,22 @@
                 @Html.DisplayFor(modelItem => item.ReturnedAt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Id)
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vehicle.Id)
+                @Html.DisplayFor(modelItem => item.Vehicle.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Buyer.Id)
+                @Html.DisplayFor(modelItem => item.Buyer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Driver.Id)
+                @Html.DisplayFor(modelItem => item.Driver.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.Id)
+                @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Protection.Id)
+                @Html.DisplayFor(modelItem => item.Protection.Name)
                 </td>
             <td>
                 <a style="border: 16px; background-color: #28A745; color: white; font-weight: 500; margin-right: 8px" type="submit" class="btn btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
