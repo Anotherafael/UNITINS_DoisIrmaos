@@ -6,13 +6,13 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um nome")]
-        [Display(Name = "Nome")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Mínimo de 2 caracteres")]
+        [Required(ErrorMessage = "Please, insert a name")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Minimum of 2 characters")]
         public string Name { get; set; }
 
 
-        [Display(Name = "Categorias")]
+        [Display(Name = "Categories")]
         public ICollection<CategoryFeature> Categories { get; set; }
 
         public Feature()

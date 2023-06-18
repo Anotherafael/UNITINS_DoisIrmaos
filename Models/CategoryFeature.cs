@@ -7,12 +7,12 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int CategoryID { get; set; }
 
-        [Display(Name = "Categoria")]
+        [Display(Name = "Category")]
         public Category Category { get; set; }
 
         public int FeatureID { get; set; }
 
-        [Display(Name = "Característica")]
+        [Display(Name = "Feature")]
         public Feature Feature { get; set; }
         public CategoryFeature()
         {

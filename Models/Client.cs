@@ -7,39 +7,39 @@ namespace UNITINS_DoisIrmaos.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um nome")]
-        [Display(Name = "Nome")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Mínimo de 2 caracteres")]
+        [Required(ErrorMessage = "Please, insert a name")]
+        [Display(Name = "Name")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Minimum of 2 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um e-mail")]
-        [Display(Name = "E-mail")]
-        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "E-mail não é válido")]
+        [Required(ErrorMessage = "Please, insert an email")]
+        [Display(Name = "Email")]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira um telefone")]
-        [Display(Name = "Telefone")]
-        [MinLength(13, ErrorMessage = "Número de telefone inválido")]
+        [Required(ErrorMessage = "Please, insert a phone number")]
+        [Display(Name = "Phone Number")]
+        [MinLength(13, ErrorMessage = "Invalid Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira uma CNH")]
+        [Required(ErrorMessage = "Please, insert a CNH")]
         [Display(Name = "CNH")]
-        [MinLength(11, ErrorMessage = "CNH inválida")]
+        [MinLength(11, ErrorMessage = "Invalid CNH")]
         public string Cnh { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira sua data de nascimento")]
+        [Required(ErrorMessage = "Please, insert a date of birth")]
         [DataType(DataType.Date)]
-        [Display(Name = "Data de Nascimento")]
+        [Display(Name = "Birthdate")]
         public DateTime BirthDate { get; set; }
 
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Mínimo de 8 caracteres")]
-        [Display(Name = "Senha")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Minimum of 8 characters")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Ativo")]
+        [Display(Name = "Active")]
         public bool Active { get; set; }
 
-        [Display(Name = "Endereço")]
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
         public ICollection<Rent> BuyerRents { get; set; }

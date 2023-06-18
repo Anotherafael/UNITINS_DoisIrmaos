@@ -11,8 +11,8 @@ namespace UNITINS_DoisIrmaos.Models
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Mínimo de 2 caracteres")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Por favor, insira o valor diário")]
-        [Display(Name = "Valor Diário")]
+        [Required(ErrorMessage = "Please, insert a price value")]
+        [Display(Name = "Daily Fee")]
         public double PricePerDay { get; set; }
 
 
