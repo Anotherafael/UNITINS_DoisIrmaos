@@ -12,8 +12,8 @@ using UNITINS_DoisIrmaos.DAL;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230615114813_ini")]
-    partial class ini
+    [Migration("20230618185838_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,7 +231,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("DriverID")
+                    b.Property<int?>("DriverID")
                         .HasColumnType("int");
 
                     b.Property<int>("EmployeeID")
@@ -243,7 +243,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("ProtectionID")
+                    b.Property<int?>("ProtectionID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReturnedAt")
@@ -255,7 +255,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Property<DateTime>("TakenAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("VehicleID")
+                    b.Property<int?>("VehicleID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -377,9 +377,8 @@ namespace UNITINS_DoisIrmaos.Migrations
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Rent", b =>
                 {
                     b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Buyer")
-                        .WithMany()
+                        .WithMany("BuyerRents")
                         .HasForeignKey("BuyerID")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Category", "Category")
@@ -389,10 +388,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                         .IsRequired();
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Client", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("DriverRents")
+                        .HasForeignKey("DriverID");
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Employee", "Employee")
                         .WithMany()
@@ -402,15 +399,11 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Protection", "Protection")
                         .WithMany()
-                        .HasForeignKey("ProtectionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProtectionID");
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Vehicle", "Vehicle")
                         .WithMany()
-                        .HasForeignKey("VehicleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleID");
 
                     b.Navigation("Buyer");
 
@@ -482,6 +475,13 @@ namespace UNITINS_DoisIrmaos.Migrations
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Category", b =>
                 {
                     b.Navigation("Features");
+                });
+
+            modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Client", b =>
+                {
+                    b.Navigation("BuyerRents");
+
+                    b.Navigation("DriverRents");
                 });
 
             modelBuilder.Entity("UNITINS_DoisIrmaos.Models.Feature", b =>

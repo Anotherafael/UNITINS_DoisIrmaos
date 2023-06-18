@@ -22,7 +22,15 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Rents
         public async Task<IActionResult> Index()
         {
-            var context = _context.Rents.Include(r => r.Buyer).Include(r => r.Category).Include(r => r.Driver).Include(r => r.Employee).Include(r => r.Protection).Include(r => r.Vehicle);
+            var context = _context.Rents
+                .Include(r => r.Buyer)
+                .Include(r => r.Category)
+                .Include(r => r.Driver)
+                .Include(r => r.Employee)
+                .Include(r => r.Protection)
+                .Include(r => r.Vehicle)
+                .Include(r => r.Acessories)
+                .Include(r => r.Taxes);
             return View(await context.ToListAsync());
         }
 
@@ -41,6 +49,8 @@ namespace UNITINS_DoisIrmaos.Controllers
                 .Include(r => r.Employee)
                 .Include(r => r.Protection)
                 .Include(r => r.Vehicle)
+                .Include(r => r.Acessories)
+                .Include(r => r.Taxes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rent == null)
             {
@@ -53,12 +63,14 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Rents/Create
         public IActionResult Create()
         {
-            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Id");
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id");
-            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Id");
-            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Id");
-            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Id");
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Id");
+            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name");
+            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name");
+            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name");
+            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name");
+            ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name");
+            ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name");
             return View();
         }
 
@@ -75,12 +87,14 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Id", rent.BuyerID);
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", rent.CategoryID);
-            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Id", rent.DriverID);
-            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Id", rent.EmployeeID);
-            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Id", rent.ProtectionID);
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Id", rent.VehicleID);
+            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name", rent.BuyerID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", rent.CategoryID);
+            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
+            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name", rent.EmployeeID);
+            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name", rent.ProtectionID);
+            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name", rent.VehicleID);
+            ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
+            ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
             return View(rent);
         }
 
@@ -97,12 +111,14 @@ namespace UNITINS_DoisIrmaos.Controllers
             {
                 return NotFound();
             }
-            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Id", rent.BuyerID);
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", rent.CategoryID);
-            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Id", rent.DriverID);
-            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Id", rent.EmployeeID);
-            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Id", rent.ProtectionID);
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Id", rent.VehicleID);
+            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name", rent.BuyerID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", rent.CategoryID);
+            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
+            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name", rent.EmployeeID);
+            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name", rent.ProtectionID);
+            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name", rent.VehicleID);
+            ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
+            ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
             return View(rent);
         }
 
@@ -138,12 +154,14 @@ namespace UNITINS_DoisIrmaos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Id", rent.BuyerID);
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", rent.CategoryID);
-            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Id", rent.DriverID);
-            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Id", rent.EmployeeID);
-            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Id", rent.ProtectionID);
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Id", rent.VehicleID);
+            ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name", rent.BuyerID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", rent.CategoryID);
+            ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
+            ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name", rent.EmployeeID);
+            ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name", rent.ProtectionID);
+            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name", rent.VehicleID);
+            ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
+            ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
             return View(rent);
         }
 
@@ -162,6 +180,8 @@ namespace UNITINS_DoisIrmaos.Controllers
                 .Include(r => r.Employee)
                 .Include(r => r.Protection)
                 .Include(r => r.Vehicle)
+                .Include(r => r.Acessories)
+                .Include(r => r.Taxes)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (rent == null)
             {

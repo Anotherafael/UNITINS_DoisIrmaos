@@ -41,7 +41,13 @@ namespace UNITINS_DoisIrmaos.Models
 
         [Display(Name = "Endereço")]
         public string Address { get; set; }
-        public Client() { }
+
+        public ICollection<Rent> BuyerRents { get; set; }
+        public ICollection<Rent> DriverRents { get; set; }
+        public Client() {
+            BuyerRents = new List<Rent>();
+            DriverRents = new List<Rent>();
+        }
         
     }
 }
