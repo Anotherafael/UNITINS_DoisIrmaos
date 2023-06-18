@@ -63,6 +63,12 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Rents/Create
         public IActionResult Create()
         {
+            loadData();
+            return View();
+        }
+
+        public void loadData()
+        {
             ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name");
             ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name");
             ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name");
@@ -71,7 +77,6 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name");
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name");
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name");
-            return View();
         }
 
         // POST: Rents/Create
@@ -79,24 +84,30 @@ namespace UNITINS_DoisIrmaos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID")] Rent rent)
+        public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID,Acessories,Taxes")] Rent rent)
         {
 
             if (rent.EndAt <= rent.StartAt)
             {
                 ModelState.AddModelError("", "Ending date can't be sooner than the start date.");
+                loadData(rent);
                 return View(rent);
             }
 
-            if (rent.ReturnedAt <= rent.TakenAt)
-            {
-                ModelState.AddModelError("", "Return date can't be sooner than the date of taking.");
-                return View(rent);
-            }
+            //if (rent.ReturnedAt != null && rent.TakenAt !=null)
+            //{
+            //    if (rent.ReturnedAt <= rent.TakenAt)
+            //    {
+            //        ModelState.AddModelError("", "Return date can't be sooner than the date of taking.");
+            //        loadData(rent);
+            //        return View(rent);
+            //    }
+            //}
 
             if (rent.Price < 0)
             {
                 ModelState.AddModelError("", "Price can't be lower than 0.");
+                loadData(rent);
                 return View(rent);
             }
 
@@ -106,6 +117,12 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            loadData(rent);
+            return View(rent);
+        }
+
+        public void loadData(Rent rent)
+        {
             ViewData["BuyerID"] = new SelectList(_context.Clients, "Id", "Name", rent.BuyerID);
             ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", rent.CategoryID);
             ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
@@ -114,12 +131,13 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name", rent.VehicleID);
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
-            return View(rent);
         }
 
         // GET: Rents/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            
+            
             if (id == null || _context.Rents == null)
             {
                 return NotFound();
@@ -151,6 +169,27 @@ namespace UNITINS_DoisIrmaos.Controllers
             if (id != rent.Id)
             {
                 return NotFound();
+            }
+
+            if (rent.EndAt <= rent.StartAt)
+            {
+                ModelState.AddModelError("", "Ending date can't be sooner than the start date.");
+                loadData(rent);
+                return View(rent);
+            }
+
+            //if (rent.ReturnedAt <= rent.EndAt)
+            //{
+            //    ModelState.AddModelError("", "Return date can't be sooner than the date of taking.");
+            //    loadData(rent);
+            //    return View(rent);
+            //}
+
+            if (rent.Price < 0)
+            {
+                ModelState.AddModelError("", "Price can't be lower than 0.");
+                loadData(rent);
+                return View(rent);
             }
 
             if (ModelState.IsValid)
