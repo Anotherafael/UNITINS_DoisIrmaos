@@ -94,7 +94,8 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name");
             ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name");
             ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name");
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name");
+            var AvailableVehicles = _context.Vehicles.Where(r => r.Available == true);
+            ViewData["VehicleID"] = new SelectList(AvailableVehicles, "Id", "Name");
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name");
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name");
             ViewBag.Price = 0.0;
@@ -190,7 +191,8 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
             ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name", rent.EmployeeID);
             ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name", rent.ProtectionID);
-            ViewData["VehicleID"] = new SelectList(_context.Vehicles, "Id", "Name", rent.VehicleID);
+            var AvailableVehicles = _context.Vehicles.Where(r => r.Available == true && r.Active == true);
+            ViewData["VehicleID"] = new SelectList(AvailableVehicles, "Id", "Name");
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
             ViewBag.Price = rent.Price;
