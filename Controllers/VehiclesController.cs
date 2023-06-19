@@ -48,7 +48,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
             return View(vehicle);
         }
 
@@ -82,7 +82,7 @@ namespace UNITINS_DoisIrmaos.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
             return View(vehicle);
         }
 
@@ -118,7 +118,7 @@ namespace UNITINS_DoisIrmaos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Id", vehicle.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "Id", "Name", vehicle.CategoryID);
             return View(vehicle);
         }
 

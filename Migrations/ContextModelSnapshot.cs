@@ -231,7 +231,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     b.Property<int?>("DriverID")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmployeeID")
+                    b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndAt")
@@ -390,9 +390,7 @@ namespace UNITINS_DoisIrmaos.Migrations
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeID");
 
                     b.HasOne("UNITINS_DoisIrmaos.Models.Protection", "Protection")
                         .WithMany()

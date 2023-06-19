@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using UNITINS_DoisIrmaos.DAL;
 using UNITINS_DoisIrmaos.Models;
 
@@ -62,6 +63,16 @@ namespace UNITINS_DoisIrmaos.Controllers
                 ModelState.AddModelError("", "Invalid Birth Day.");
                 return View(client);
             }
+            if (client.PhoneNumber.Length < 13)
+            {
+                ModelState.AddModelError("", "Invalid Phone.");
+                return View(client);
+            }
+            if (client.Cnh.Length < 11)
+            {
+                ModelState.AddModelError("", "Invalid CNH.");
+                return View(client);
+            }
 
             if (ModelState.IsValid)
             {
@@ -86,6 +97,16 @@ namespace UNITINS_DoisIrmaos.Controllers
             if (client.BirthDate > DateTime.Now.AddYears(-18))
             {
                 ModelState.AddModelError("", "Invalid Birth Day.");
+                return View(client);
+            }
+            if (client.PhoneNumber.Length < 13)
+            {
+                ModelState.AddModelError("", "Invalid Phone.");
+                return View(client);
+            }
+            if (client.Cnh.Length < 11)
+            {
+                ModelState.AddModelError("", "Invalid CNH.");
                 return View(client);
             }
             if (!client.Password.Equals(ConfirmPassword))
@@ -116,7 +137,7 @@ namespace UNITINS_DoisIrmaos.Controllers
             {
                 return NotFound();
             }
-            return View(client);
+            return View("Edit", client);
         }
 
         // POST: Clients/Edit/5
@@ -124,17 +145,33 @@ namespace UNITINS_DoisIrmaos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,PhoneNumber,Cnh,BirthDate,Password,ConfirmPassword,Active,Address")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,BirthDate,Cnh,Password,PhoneNumber,Address")] Client client, string ConfirmPassword)
         {
             if (id != client.Id)
             {
                 return NotFound();
+            }
+            if (client.Password.IsNullOrEmpty())
+            {
+                ModelState.AddModelError("", "Insert your password.");
+                return View(client);
+            }
+            if (!client.Password.Equals(ConfirmPassword))
+            {
+                ModelState.AddModelError("", "Passwords don't match.");
+                return View(client);
+            }
+            if (client.PhoneNumber.Length < 13)
+            {
+                ModelState.AddModelError("", "Invalid Phone.");
+                return View(client);
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    client.Active = true;
                     _context.Update(client);
                     await _context.SaveChangesAsync();
                 }

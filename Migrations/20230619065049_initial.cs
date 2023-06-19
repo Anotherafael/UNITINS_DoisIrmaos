@@ -182,7 +182,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                     VehicleID = table.Column<int>(type: "int", nullable: true),
                     BuyerID = table.Column<int>(type: "int", nullable: false),
                     DriverID = table.Column<int>(type: "int", nullable: true),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false),
+                    EmployeeID = table.Column<int>(type: "int", nullable: true),
                     ProtectionID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -208,8 +208,7 @@ namespace UNITINS_DoisIrmaos.Migrations
                         name: "FK_Rents_Personnel_EmployeeID",
                         column: x => x.EmployeeID,
                         principalTable: "Personnel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rents_Protections_ProtectionID",
                         column: x => x.ProtectionID,

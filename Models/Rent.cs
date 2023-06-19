@@ -55,7 +55,7 @@ namespace UNITINS_DoisIrmaos.Models
         public Client Driver { get; set; }
 
         [Display(Name = "Employee")]
-        public int EmployeeID { get; set; }
+        public int? EmployeeID { get; set; }
 
         [Display(Name = "Employee")]
         public Employee Employee { get; set; }

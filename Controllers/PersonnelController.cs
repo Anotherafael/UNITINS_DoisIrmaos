@@ -56,6 +56,16 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,Cpf,PhoneNumber,Password")] Employee employee)
         {
+            if (employee.Cpf.Length < 11)
+            {
+                ModelState.AddModelError("", "Invalid Cpf.");
+                return View(employee);
+            }
+            if (employee.PhoneNumber.Length < 13)
+            {
+                ModelState.AddModelError("", "Invalid Phone.");
+                return View(employee);
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
@@ -91,6 +101,18 @@ namespace UNITINS_DoisIrmaos.Controllers
             if (id != employee.Id)
             {
                 return NotFound();
+            }
+
+            if (employee.Cpf.Length < 11)
+            {
+                ModelState.AddModelError("", "Invalid Cpf.");
+                return View(employee);
+            }
+
+            if (employee.PhoneNumber.Length < 13)
+            {
+                ModelState.AddModelError("", "Invalid Phone.");
+                return View(employee);
             }
 
             if (ModelState.IsValid)
