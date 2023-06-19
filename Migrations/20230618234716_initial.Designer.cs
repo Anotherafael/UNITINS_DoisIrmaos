@@ -12,7 +12,7 @@ using UNITINS_DoisIrmaos.DAL;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230618185838_initial")]
+    [Migration("20230618234716_initial")]
     partial class initial
     {
         /// <inheritdoc />
