@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UNITINS_DoisIrmaos.Migrations
 {
     /// <inheritdoc />
-    public partial class ini : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -176,8 +176,8 @@ namespace UNITINS_DoisIrmaos.Migrations
                     Price = table.Column<float>(type: "real", nullable: false),
                     StartAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TakenAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ReturnedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TakenAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReturnedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
                     VehicleID = table.Column<int>(type: "int", nullable: true),
                     BuyerID = table.Column<int>(type: "int", nullable: false),
@@ -198,15 +198,12 @@ namespace UNITINS_DoisIrmaos.Migrations
                         name: "FK_Rents_Clients_BuyerID",
                         column: x => x.BuyerID,
                         principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rents_Clients_DriverID",
                         column: x => x.DriverID,
                         principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction,
-                        onUpdate: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rents_Personnel_EmployeeID",
                         column: x => x.EmployeeID,
@@ -217,15 +214,12 @@ namespace UNITINS_DoisIrmaos.Migrations
                         name: "FK_Rents_Protections_ProtectionID",
                         column: x => x.ProtectionID,
                         principalTable: "Protections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Rents_Vehicles_VehicleID",
                         column: x => x.VehicleID,
                         principalTable: "Vehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction,
-                        onUpdate: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

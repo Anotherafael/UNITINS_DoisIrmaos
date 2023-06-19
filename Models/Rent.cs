@@ -37,7 +37,7 @@ namespace UNITINS_DoisIrmaos.Models
         public Category Category { get; set; }
 
         [Display(Name = "Vehicle")]
-        public int VehicleID { get; set; }
+        public int? VehicleID { get; set; }
 
         [Display(Name = "Vehicle")]
         public Vehicle Vehicle { get; set; }
@@ -49,7 +49,7 @@ namespace UNITINS_DoisIrmaos.Models
         public Client Buyer { get; set; }
 
         [Display(Name = "Driver")]
-        public int DriverID { get; set; }
+        public int? DriverID { get; set; }
 
         [Display(Name = "Driver")]
         public Client Driver { get; set; }
@@ -61,7 +61,7 @@ namespace UNITINS_DoisIrmaos.Models
         public Employee Employee { get; set; }
 
         [Display(Name = "Protection")]
-        public int ProtectionID { get; set; }
+        public int? ProtectionID { get; set; }
 
         [Display(Name = "Protection")]
         public Protection Protection { get; set; }

@@ -32,6 +32,8 @@ namespace UNITINS_DoisIrmaos.DAL
             modelBuilder.Entity<Client>().Property(c => c.Password).IsRequired(false);
             modelBuilder.Entity<Client>().Property(c => c.Address).IsRequired(false);
 
+            modelBuilder.Entity<Rent>().HasOne(x => x.Buyer).WithMany(x => x.BuyerRents).HasForeignKey(x => x.BuyerID).OnDelete(DeleteBehavior.ClientSetNull);
+            modelBuilder.Entity<Rent>().HasOne(x => x.Driver).WithMany(x => x.DriverRents).HasForeignKey(x => x.DriverID).OnDelete(DeleteBehavior.ClientSetNull).IsRequired(false);
         }
 
     }
