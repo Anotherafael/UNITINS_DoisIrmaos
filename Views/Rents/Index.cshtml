@@ -55,7 +55,7 @@
                     @{
                         var formattedPrice = item.Price.ToString("0.00");
                     }
-                @Html.DisplayFor(model => formattedPrice)
+                R$ @Html.DisplayFor(model => formattedPrice)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartAt)
