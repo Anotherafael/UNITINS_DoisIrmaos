@@ -108,7 +108,12 @@ namespace UNITINS_DoisIrmaos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Price,StartAt,EndAt,TakenAt,ReturnedAt,CategoryID,VehicleID,BuyerID,DriverID,EmployeeID,ProtectionID")] Rent rent, List<int> Acessories, List<int> Taxes)
         {
-
+            if (rent.StartAt <= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Start date can't be sooner than currently time.");
+                loadData(rent);
+                return View(rent);
+            }
             if (rent.EndAt <= rent.StartAt)
             {
                 ModelState.AddModelError("", "Ending date can't be sooner than the start date.");
@@ -191,8 +196,8 @@ namespace UNITINS_DoisIrmaos.Controllers
             ViewData["DriverID"] = new SelectList(_context.Clients, "Id", "Name", rent.DriverID);
             ViewData["EmployeeID"] = new SelectList(_context.Personnel, "Id", "Name", rent.EmployeeID);
             ViewData["ProtectionID"] = new SelectList(_context.Protections, "Id", "Name", rent.ProtectionID);
-            var AvailableVehicles = _context.Vehicles.Where(r => r.Available == true && r.Active == true);
-            ViewData["VehicleID"] = new SelectList(AvailableVehicles, "Id", "Name");
+            var AvailableVehiclesFromCategory = _context.Vehicles.Where(r => r.Available == true && r.Active == true && r.CategoryID == rent.CategoryID);
+            ViewData["VehicleID"] = new SelectList(AvailableVehiclesFromCategory, "Id", "Name");
             ViewData["Acessories"] = new MultiSelectList(_context.Acessories, "Id", "Name", rent.Acessories);
             ViewData["Taxes"] = new MultiSelectList(_context.Taxes, "Id", "Name", rent.Taxes);
             ViewBag.Price = rent.Price;
@@ -238,6 +243,12 @@ namespace UNITINS_DoisIrmaos.Controllers
                 return NotFound();
             }
 
+            if (rent.StartAt <= DateTime.Now)
+            {
+                ModelState.AddModelError("", "Start date can't be sooner than currently time.");
+                loadData(rent);
+                return View(rent);
+            }
             if (rent.EndAt <= rent.StartAt)
             {
                 ModelState.AddModelError("", "Ending date can't be sooner than the start date.");
@@ -311,8 +322,10 @@ namespace UNITINS_DoisIrmaos.Controllers
                         var tax = await _context.Taxes.FirstOrDefaultAsync(x => x.Id == taxID);
                         totalPrice += ((float)tax.PricePerDay); 
                         _context.Add(rentTax);
+                        await _context.SaveChangesAsync();
                     }
 
+                    rent.Price = totalPrice;
                     _context.Update(rent);
                     await _context.SaveChangesAsync();
                 }

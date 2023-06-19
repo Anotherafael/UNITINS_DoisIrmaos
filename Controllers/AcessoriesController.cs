@@ -58,6 +58,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         {
             if (ModelState.IsValid)
             {
+                acessory.Active = true;
                 _context.Add(acessory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
