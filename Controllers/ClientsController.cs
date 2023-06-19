@@ -47,7 +47,7 @@ namespace UNITINS_DoisIrmaos.Controllers
         // GET: Clients/Create
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Clients/Create
@@ -70,12 +70,12 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(client);
+            return View("Create", client);
         }
 
         public IActionResult CreateFull()
         {
-            return View();
+            return View("CreateFull");
         }
 
         [HttpPost]
@@ -100,7 +100,7 @@ namespace UNITINS_DoisIrmaos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(client);
+            return View("CreateFull", client);
         }
 
         // GET: Clients/Edit/5
